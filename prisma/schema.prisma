@@ -1,0 +1,41 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String            @unique
+  password        String
+  token           String
+  Familyreference Familyreference[]
+}
+
+model Familyreference {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  name           String
+  cpf            String
+  nis            String
+  rg             String
+  titulo         String
+  naturalness    String
+  nameMother     String
+  nameFather     String
+  birthdayDate   DateTime
+  surname        String
+  phoneNumber    String
+  matrialStatus  String
+  education      String
+  elderlyPerson  String
+  disabledPerson String
+  folderNunber   Int
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+}
